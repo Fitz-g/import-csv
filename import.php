@@ -38,26 +38,16 @@ if(isset($_POST['import']) && isset($_FILES["file"])) {
 
         foreach ($csv as $record) {
             //Do not forget to validate your data before inserting it in your database
-            $req->bindValue(':id_transaction', $record['ID de la transaction'], PDO::PARAM_STR);
+            $req->bindValue(':id_transaction', $record['ID transaction'], PDO::PARAM_STR);
             $req->bindValue(':site_id', $record['Site ID'], PDO::PARAM_STR);
             $req->bindValue(':payment_result', $record['Resultat Paiement'], PDO::PARAM_STR);
             $req->bindValue(':operator_id', $record['Operateur Transaction ID'], PDO::PARAM_STR);
-            $req->bindValue(':payment_date', $record['Date de paiement'], PDO::PARAM_STR);
-            $req->bindValue(':payment_hour', $record['Heure de paiement'], PDO::PARAM_STR);
+            $req->bindValue(':payment_date', $record['Date Paiement'], PDO::PARAM_STR);
+            $req->bindValue(':payment_hour', $record['Heure Paiement'], PDO::PARAM_STR);
             $req->bindValue(':file_id', $id, PDO::PARAM_INT);
 
             $req->execute();
         }
-
-//        $req->execute(array(
-//            'id_transaction' => $column[0],
-//            'site_id' => $column[1],
-//            'payment_result' => $column[2],
-//            'operator_id' => $column[3],
-//            'payment_date' => $column[4],
-//            'payment_hour' => $column[5],
-//            'file_id' => $id
-//        ));
 
         $req3 = $db->prepare('UPDATE files set rows_number=:rows_number WHERE id=:id');
         $req3->execute(array(
